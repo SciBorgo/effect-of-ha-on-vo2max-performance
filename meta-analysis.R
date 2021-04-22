@@ -73,3 +73,52 @@ forest(meta_fit,
        ilab.pos = 8,
        showweights = T)
 dev.off()
+
+
+# Remove Schvartz as they recruited participants with different VO2max
+d_sub = d_therm %>% filter(!study_id == "Schvartz (1977)")
+
+meta_fit <- metacont(n.e = n_con, # flipped for direction
+                     mean.e = mu_con, # flipped for direction
+                     sd.e = sd_con, # flipped for direction
+                     n.c = n_exp, # flipped for direction
+                     mean.c = mu_exp, # flipped for direction
+                     sd.c = sd_exp, # flipped for direction
+                     data = d_sub,
+                     studlab = paste(study_id),
+                     comb.fixed = F,
+                     comb.random = T,
+                     prediction = T,
+                     sm = "SMD",
+                     method.smd = "Hedges",
+                     method.tau = "SJ")
+meta_fit
+summary(meta_fit)
+
+png(file = 'vo2max-perf-thermo-no-schvartz.png', width = 10, height = 5.25, res = 600, units = "in") 
+forest(meta_fit, 
+       sortvar = TE,
+       xlim = c(-4,4),
+       xlab ="Favours Con                SMD                 Favours HA",
+       rightlabs = c("g","95% CI","Weight"),
+       leftlabs = c("Author (year)", "N","Mean","SD","N","Mean","SD"),
+       lab.e = "Heat acclimation",
+       lab.c = "Control",
+       pooled.totals = T,
+       smlab = "",
+       text.random = "Overall effect",
+       print.tau2 = T,
+       col.diamond = "gray",
+       col.diamond.lines = "black",
+       col.predict = "black",
+       print.I2.ci = F,
+       digits.sd = 1,
+       digits.mean = 1,
+       mlab = "",
+       ilab.xpos = 8,
+       ilab.pos = 8,
+       showweights = T)
+dev.off()
+
+
+
