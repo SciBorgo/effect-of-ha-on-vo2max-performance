@@ -32,12 +32,12 @@ sort(names(d_therm))
 
 # Meta analysis
 # Details: https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/random.html
-meta_fit <- metacont(n.e = n_con, # flipped for direction
-                     mean.e = mu_con, # flipped for direction
-                     sd.e = sd_con, # flipped for direction
-                     n.c = n_exp, # flipped for direction
-                     mean.c = mu_exp, # flipped for direction
-                     sd.c = sd_exp, # flipped for direction
+meta_fit <- metacont(n.c = n_con,
+                     mean.c = mu_con,
+                     sd.c = sd_con,
+                     n.e = n_exp,
+                     mean.e = mu_exp,
+                     sd.e = sd_exp, 
                      data = d_therm,
                      studlab = paste(study_id),
                      comb.fixed = F,
@@ -56,7 +56,7 @@ forest(meta_fit,
        xlab ="Favours Con                SMD                 Favours HA",
        rightlabs = c("g","95% CI","Weight"),
        leftlabs = c("Author (year)", "N","Mean","SD","N","Mean","SD"),
-       lab.e = "Heat acclimation",
+       lab.e = "HA",
        lab.c = "Control",
        pooled.totals = T,
        smlab = "",
@@ -78,12 +78,12 @@ dev.off()
 # Remove Schvartz as they recruited participants with different VO2max
 d_sub = d_therm %>% filter(!study_id == "Schvartz (1977)")
 
-meta_fit <- metacont(n.e = n_con, # flipped for direction
-                     mean.e = mu_con, # flipped for direction
-                     sd.e = sd_con, # flipped for direction
-                     n.c = n_exp, # flipped for direction
-                     mean.c = mu_exp, # flipped for direction
-                     sd.c = sd_exp, # flipped for direction
+meta_fit <- metacont(n.c = n_con,
+                     mean.c = mu_con,
+                     sd.c = sd_con,
+                     n.e = n_exp,
+                     mean.e = mu_exp,
+                     sd.e = sd_exp, 
                      data = d_sub,
                      studlab = paste(study_id),
                      comb.fixed = F,
@@ -102,7 +102,7 @@ forest(meta_fit,
        xlab ="Favours Con                SMD                 Favours HA",
        rightlabs = c("g","95% CI","Weight"),
        leftlabs = c("Author (year)", "N","Mean","SD","N","Mean","SD"),
-       lab.e = "Heat acclimation",
+       lab.e = "HA",
        lab.c = "Control",
        pooled.totals = T,
        smlab = "",
